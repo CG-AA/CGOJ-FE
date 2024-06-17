@@ -1,0 +1,11 @@
+.page-header {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+    z-index: 10000;
+}

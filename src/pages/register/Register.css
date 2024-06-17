@@ -1,0 +1,17 @@
+.register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.register-form input {
+    color: var(--gray);
+    border-color: var(--secondary-color);
+    border-radius: 0;
+    
+    box-shadow: none;
+    border-style: solid;
+    margin: 5px;
+}
