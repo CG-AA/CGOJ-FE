@@ -17,9 +17,7 @@ const Problems = () => {
         const fetchProblems = async () => {
             try {
                 const problemsPerPage = 10;
-                const response = await callAPI(`/problems?page=${page}&problemsPerPage=${problemsPerPage}`, 'GET', null, {
-                    Authorization: 'Bearer ' + localStorage.getItem('jwtToken') // assuming jwtToken is stored in localStorage
-                });
+                const response = await callAPI(`/problems?page=${page}&problemsPerPage=${problemsPerPage}`, 'GET', null);
                 if (response.status === 404) {
                     addNotification(1, 'No problems found');
                 } else {
