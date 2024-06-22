@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
-import useAPI from '../../API/api';
 import { NotificationContext } from '../../components/notifications/NotificationList';
+import obtainJWT from '../../functions/obtainJWT';
 
 import './Login.css';
 
@@ -10,8 +10,6 @@ const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const { callAPI } = useAPI();
-
     const handleLogin = async (event) => {
         event.preventDefault();
         if (!email || !password) {
@@ -20,17 +18,13 @@ const LoginForm = () => {
         }
 
         try {
-            const response = await callAPI('/login', 'POST', { email, password });
-            localStorage.setItem('jwt', response.jwt);
-            addNotification(0, 'Login successful');
+            await obtainJWT(email, password);
             window.location.href = '/home';
             return;
         } catch (error) {
             addNotification(1, 'error: ' + error);
             return;
         }
-
-
     };
 
     return (

@@ -4,13 +4,9 @@ import settings from '../settings.json';
 import { NotificationContext } from '../components/notifications/NotificationList';
 import obtainJWT from '../functions/obtainJWT';
 
-/**
- * Custom hook for making API calls.
- * @returns {Object} An object containing the `callAPI` function.
- */
 const useAPI = () => {
+    const { addNotification } = useContext(NotificationContext);
     const callAPI = useCallback((route, method, data) => {
-        const { addNotification } = useContext(NotificationContext);
         return new Promise(async (resolve, reject) => {
             try {
                 const options = {
@@ -33,6 +29,7 @@ const useAPI = () => {
                         if(localStorage.getItem('jwt')){
                             localStorage.removeItem('jwt');
                             addNotification(2, 'Session expired, please log in again');
+                            window.location.href = '/login';
                         }else {
                             await obtainJWT();
                         }
