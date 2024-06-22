@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { NotificationContext } from '../../components/notifications/NotificationList';
-import obtainJWT from '../../functions/obtainJWT';
 
 import './Login.css';
 
@@ -18,7 +17,6 @@ const LoginForm = () => {
         }
 
         try {
-            await obtainJWT(email, password);
             window.location.href = '/home';
             return;
         } catch (error) {

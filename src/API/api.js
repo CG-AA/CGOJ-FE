@@ -2,7 +2,6 @@ import {useCallback, useContext} from 'react';
 
 import settings from '../settings.json';
 import { NotificationContext } from '../components/notifications/NotificationList';
-import obtainJWT from '../functions/obtainJWT';
 
 const useAPI = () => {
     const { addNotification } = useContext(NotificationContext);
@@ -26,13 +25,9 @@ const useAPI = () => {
                 if (!response.ok) {
                     const error = await response.text();
                     if (error.startsWith("Failed to verify JWT:")){
-                        if(localStorage.getItem('jwt')){
-                            localStorage.removeItem('jwt');
-                            addNotification(2, 'Session expired, please log in again');
-                            window.location.href = '/login';
-                        }else {
-                            await obtainJWT();
-                        }
+                        localStorage.removeItem('jwt');
+                        addNotification(2, 'Session expired, please log in again');
+                        window.location.href = '/login';
 
                     }
                     reject(error);
