@@ -1,45 +1,44 @@
-import {useCallback, useContext} from 'react';
+import { useCallback, useContext } from 'react';
 
 import settings from '../settings.json';
 import { NotificationContext } from '../components/notifications/NotificationList';
 
 const useAPI = () => {
     const { addNotification } = useContext(NotificationContext);
-    const callAPI = useCallback((route, method, data) => {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const options = {
-                    method,
-                    headers: {
-                        'Authorization': localStorage.getItem('jwt'),
-                        'Content-Type': 'application/json'
-                    }
-                };
-    
-                if (method.toUpperCase() !== 'GET') {
-                    options.body = JSON.stringify(data);
-                }
-    
-                const response = await fetch(settings.CGBE_origin+route, options);
-    
-                if (!response.ok) {
-                    const error = await response.text();
-                    if (error.startsWith("Failed to verify JWT:")){
-                        localStorage.removeItem('jwt');
-                        addNotification(2, 'Session expired, please log in again');
-                        window.location.href = '/login';
 
-                    }
-                    reject(error);
+    const callAPI = useCallback(async (route, method, data) => {
+        try {
+            const jwt = localStorage.getItem('jwt');
+
+            const options = {
+                method,
+                headers: {
+                    'Authorization': jwt,
+                    'Content-Type': 'application/json'
                 }
-    
-                const responseData = await response.json();
-                resolve(responseData);
-            } catch (error) {
-                reject(error);
+            };
+
+            if (method.toUpperCase() !== 'GET') {
+                options.body = JSON.stringify(data);
             }
-        });
-    }, []);
+
+            const response = await fetch(settings.CGBE_origin + route, options);
+
+            if (!response.ok) {
+                const error = await response.text();
+                if (error.startsWith("Failed to verify JWT:")) {
+                    localStorage.removeItem('jwt');
+                    addNotification(2, 'Session expired, please log in again');
+                    history.push('/login');
+                }
+                throw new Error(error);
+            }
+
+            return await response.json();
+        } catch (error) {
+            throw error;
+        }
+    }, [addNotification, history]);
 
     return { callAPI };
 };
