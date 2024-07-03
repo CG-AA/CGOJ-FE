@@ -24,7 +24,6 @@ const Problems = () => {
                     setProblems(response);
                 }
             } catch (error) {
-                addNotification(1, 'error: ' + error);
             }
         };
 
@@ -43,7 +42,7 @@ const Problems = () => {
 
     return (
         <>
-            <table className="problems-table">
+            <table class="problems-table">
                 <thead>
                     <tr>
                         <th> ID </th>

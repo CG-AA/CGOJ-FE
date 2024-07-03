@@ -29,7 +29,6 @@ const useAPI = () => {
                 if (error.startsWith("Failed to verify JWT:")) {
                     localStorage.removeItem('jwt');
                     addNotification(2, 'Session expired, please log in again');
-                    history.push('/login');
                 }
                 throw new Error(error);
             }
@@ -38,7 +37,7 @@ const useAPI = () => {
         } catch (error) {
             throw error;
         }
-    }, [addNotification, history]);
+    }, [addNotification]);
 
     return { callAPI };
 };

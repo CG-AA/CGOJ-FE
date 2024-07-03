@@ -1,18 +1,18 @@
-.Problems {
+.problems-table {
     display: inline-table;
-    width: 100%;
+    width: 50%;
     height: 100%;
     margin: 3px;
     border-collapse: collapse;
     outline: 1px solid var(--primary-gray);
 }
 
-.Problems td {
+.problems-table td {
     padding: 0.5%;
     border: 1px solid var(--primary-gray);
 }
 
-.Problems th {
+.problems-table th {
     padding: 0.5%;
     border: 1px solid var(--primary-gray);
 }
