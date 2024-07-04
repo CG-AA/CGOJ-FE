@@ -1,4 +1,4 @@
-FROM node:21 as build
+FROM node:latest as build
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ RUN npm install axios
 RUN npm run build
 
 
-FROM node:14 as runtime
+FROM node:latest as runtime
 
 WORKDIR /app
 
