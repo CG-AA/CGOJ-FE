@@ -6,7 +6,7 @@ import Problems from './pages/problems/Problems';
 import Login from './pages/login/Login';
 import NotFound from './pages/notfound/NotFound';
 import RegisterForm from './pages/register/Register';
-import Manage_panel from './pages/manage_panel/manage_panel';
+import Manage_panel from './pages/manage_panel/ManagePanel';
 import PageHeader from './components/pageheader/PageHeader';
 
 function App() {
