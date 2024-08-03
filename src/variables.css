@@ -1,4 +1,19 @@
 :root {
-    --primary-color: #000000;
-    --text-color: #00ffff;
+    --primary: #000000;
+    --text: #ccffff;
+    --icon: #ff66ff;
+    --success: #00ff00;
+    --warning: #ff9900;
+    --danger: #ff0000;
+    --info: #00ccff;
+}
+
+.light {
+    --primary: #eeffff;
+    --text: #000000;
+    --icon: #ff66ff;
+    --success: #00ff00;
+    --warning: #ff9900;
+    --danger: #ff0000;
+    --info: #00ccff;
 }

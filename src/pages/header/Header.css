@@ -1,5 +1,5 @@
 .header {
-  background-color: #f8f9fa;
+  background-color: var(--primary);
   padding: 1rem;
 }
 
@@ -15,7 +15,7 @@
 
 .nav-link {
   text-decoration: none;
-  color: #007bff;
+  color: var(--text);
   padding: 0.5rem 1rem;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -23,6 +23,5 @@
 }
 
 .nav-link:hover {
-  background-color: #e2e6ea;
-  border-color: #dae0e5;
+    text-shadow: 0 0 5px var(--icon);
 }
