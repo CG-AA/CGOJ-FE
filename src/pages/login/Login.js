@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { notify } from '../../notification/Notification';
+import { notify_error, notify_info, notify_warning, notify_success } from '../../notification/Notification';
 import validater from 'validator';
 import './Login.css';
 
@@ -11,11 +11,11 @@ function Login() {
         event.preventDefault();
         // validate the form
         if (!username || !password) {
-            notify
+            notify_warning('Please fill in all fields');
             return;
         }
         if (!validater.isEmail(username)) {
-            alert('Please enter a valid email');
+            notify_warning('Please enter a valid email address');
             return;
         }
     };
