@@ -7,6 +7,11 @@ const url = process.env.REACT_APP_BE_URL;
 // remove data and content-type if the method does not require them
 async function callAPI(method, endpoint, data) {
     const fullUrl = `${url}${endpoint}`;
+    if(localStorage.getItem('jwt') === null) {
+        const jwt = '0';
+    } else {
+        const jwt = localStorage.getItem('jwt');
+    }
 
     try {
         const response = await axios({
@@ -15,10 +20,10 @@ async function callAPI(method, endpoint, data) {
             data: data,
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `${localStorage.getItem('jwt')}`
+                'Authorization': `${jwt}`
             }
         });
-        return response.data;
+        return response;
     } catch (error) {
         notify_error(error.response?.data?.message || 'An error occurred');
         throw error;

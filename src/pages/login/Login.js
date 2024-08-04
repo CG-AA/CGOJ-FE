@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { notify_error, notify_info, notify_warning, notify_success } from '../../notification/Notification';
 import validater from 'validator';
+import { callAPI } from '../../API/API';
 import './Login.css';
 
 function Login() {
@@ -18,6 +19,7 @@ function Login() {
             notify_warning('Please enter a valid email address');
             return;
         }
+        response = callAPI('POST', '/login', )
     };
 
     return (
