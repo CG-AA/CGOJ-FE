@@ -1,30 +1,28 @@
-const axios = require('axios');
-const fs = require('fs');
-const path = require('path');
+import axios from 'axios';
+import { notify_error } from '../notification/Notification';
 
-const settingsPath = path.join(__dirname, 'settings.json');
-const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf-8'));
+const url = process.env.REACT_APP_BE_URL;
 
-const url = settings.BEurl;
-
-function callAPI(method, endpoint, data) {
+// todo
+// remove data and content-type if the method does not require them
+async function callAPI(method, endpoint, data) {
     const fullUrl = `${url}${endpoint}`;
 
-    return axios({
-        method: method,
-        url: fullUrl,
-        data: data,
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `${localStorage.getItem('jwt')}`
-        }
-    })
-    .then(response => {
-        console.log('Response:', response.data);
+    try {
+        const response = await axios({
+            method: method,
+            url: fullUrl,
+            data: data,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${localStorage.getItem('jwt')}`
+            }
+        });
         return response.data;
-    })
-    .catch(error => {
-        console.error('Error:', error.message);
+    } catch (error) {
+        notify_error(error.response?.data?.message || 'An error occurred');
         throw error;
-    });
+    }
 }
+
+export { callAPI };
