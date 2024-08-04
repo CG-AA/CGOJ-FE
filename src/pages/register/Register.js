@@ -1,15 +1,13 @@
 /**
- * to BE:
- * POST /login { email, password }
+ * To BE:
+ * POST /register { name, email, password }
  */
-
 import React, { useState } from 'react';
 import { notify_error, notify_warning, notify_success } from '../../notification/Notification';
 import validator from 'validator';
-import { callAPI } from '../../API/API';
-import './Login.css';
 
-function Login() {
+function Register() {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -21,25 +19,36 @@ function Login() {
             return;
         }
         try {
-            const response = await callAPI('POST', '/login', { email, password });
+            const response = await callAPI('POST', '/register', { name, email, password });
             if (response.status === 200) {
-                notify_success('Login successful');
+                notify_success('Registration successful');
                 // store the token in local storage
                 localStorage.setItem('jwt', response.data.JWT);
-                // redirect to previous page
-                window.history.back();
+                // redirect to home page
+                window.location.href = '/';
             } else {
-                notify_error('Incorrect email or password');
+                notify_error(response.data.message);
             }
-        } catch (error) {
+        }
+        catch (error) {
             notify_error(error.message);
         }
-    };
+    }
 
     return (
         <div className="login-container">
-            <h2>Login</h2>
+            <h2>Register</h2>
             <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label htmlFor="name">Name</label>
+                    <input
+                        type="text"
+                        id="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                    />
+                </div>
                 <div className="form-group">
                     <label htmlFor="email">Email</label>
                     <input
@@ -60,10 +69,10 @@ function Login() {
                         required
                     />
                 </div>
-                <button type="submit">Login</button>
+                <button type="submit">Register</button>
             </form>
         </div>
     );
 }
 
-export default Login;
+export default Register;
