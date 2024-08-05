@@ -1,6 +1,6 @@
 /**
  * To BE:
- * POST /register { name, email, password }
+ * POST /register { name: string, email: string, password: string }
  */
 import React, { useState } from 'react';
 import { notify_error, notify_warning, notify_success } from '../../notification/Notification';
@@ -19,7 +19,7 @@ function Register() {
             return;
         }
         try {
-            const response = await callAPI('POST', '/register', { name, email, password });
+            const response = await callAPI('POST', '/register', { 'name': name, 'email': email, 'password': password });
             if (response.status === 200) {
                 notify_success('Registration successful');
                 // store the token in local storage

@@ -1,6 +1,6 @@
 /**
  * to BE:
- * POST /login { email, password }
+ * POST /login { email: string, password: string }
  */
 
 import React, { useState } from 'react';
@@ -21,7 +21,7 @@ function Login() {
             return;
         }
         try {
-            const response = await callAPI('POST', '/login', { email, password });
+            const response = await callAPI('POST', '/login', { 'email': email, 'password': password });
             if (response.status === 200) {
                 notify_success('Login successful');
                 // store the token in local storage
