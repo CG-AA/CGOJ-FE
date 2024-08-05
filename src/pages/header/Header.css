@@ -13,6 +13,16 @@
   margin: 0;
 }
 
+.nav-text {
+  display: inline;
+  text-decoration: none;
+  color: var(--text);
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
 .nav-link {
   text-decoration: none;
   color: var(--text);

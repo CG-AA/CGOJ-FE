@@ -22,6 +22,9 @@ function Header() {
 			  Login
 			</Link>
 		  </li>
+		  <li className="nav-item" style={{ marginLeft: 'auto' }}>
+			<p className='nav-text'>Profile</p>
+		  </li>
 		</ul>
 	  </nav>
 	</header>
