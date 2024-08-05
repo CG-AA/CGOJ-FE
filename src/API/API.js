@@ -7,10 +7,11 @@ const url = process.env.REACT_APP_BE_URL;
 // remove data and content-type if the method does not require them
 async function callAPI(method, endpoint, data) {
     const fullUrl = `${url}${endpoint}`;
+    let jwt;
     if(localStorage.getItem('jwt') === null) {
-        const jwt = '0';
+        jwt = '0';
     } else {
-        const jwt = localStorage.getItem('jwt');
+        jwt = localStorage.getItem('jwt');
     }
 
     try {

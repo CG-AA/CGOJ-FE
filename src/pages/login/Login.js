@@ -7,7 +7,6 @@ import React, { useState } from 'react';
 import { notify_error, notify_warning, notify_success } from '../../notification/Notification';
 import validator from 'validator';
 import { callAPI } from '../../API/API';
-import './Login.css';
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -23,11 +22,11 @@ function Login() {
         try {
             const response = await callAPI('POST', '/login', { 'email': email, 'password': password });
             if (response.status === 200) {
-                notify_success('Login successful');
                 // store the token in local storage
                 localStorage.setItem('jwt', response.data.JWT);
                 // redirect to previous page
                 window.history.back();
+                notify_success('Login successful');
             } else {
                 notify_error('Incorrect email or password');
             }

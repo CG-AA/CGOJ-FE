@@ -5,6 +5,7 @@
 import React, { useState } from 'react';
 import { notify_error, notify_warning, notify_success } from '../../notification/Notification';
 import validator from 'validator';
+import { callAPI } from '../../API/API';
 
 function Register() {
     const [name, setName] = useState('');
@@ -21,11 +22,11 @@ function Register() {
         try {
             const response = await callAPI('POST', '/register', { 'name': name, 'email': email, 'password': password });
             if (response.status === 200) {
-                notify_success('Registration successful');
                 // store the token in local storage
                 localStorage.setItem('jwt', response.data.JWT);
                 // redirect to home page
                 window.location.href = '/';
+                notify_success('Registration successful');
             } else {
                 notify_error(response.data.message);
             }
