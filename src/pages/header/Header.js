@@ -7,20 +7,18 @@ function Header() {
     const [authButton, setAuthButton] = useState('');
 
     useEffect(() => {
-        const storedUserName = localStorage.getItem('UserName');
-        if (storedUserName) {
-            setUserName(storedUserName);
-        }
-
-        const handleStorageChange = () => {
-            const updatedUserName = localStorage.getItem('UserName');
-            setUserName(updatedUserName || '');
+        const updateUserName = () => {
+            const storedUserName = localStorage.getItem('userName');
+            setUserName(storedUserName || '');
         };
 
-        window.addEventListener('storage', handleStorageChange);
+        updateUserName();
 
+        window.addEventListener('storage', updateUserName);
+
+        // Cleanup event listener on component unmount
         return () => {
-            window.removeEventListener('storage', handleStorageChange);
+            window.removeEventListener('storage', updateUserName);
         };
     }, []);
 
