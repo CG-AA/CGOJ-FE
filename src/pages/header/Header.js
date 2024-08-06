@@ -11,6 +11,17 @@ function Header() {
         if (storedUserName) {
             setUserName(storedUserName);
         }
+
+        const handleStorageChange = () => {
+            const updatedUserName = localStorage.getItem('UserName');
+            setUserName(updatedUserName || '');
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+        };
     }, []);
 
     useEffect(() => {
