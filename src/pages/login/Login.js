@@ -24,6 +24,7 @@ function Login() {
             if (response.status === 200) {
                 // store the token in local storage
                 localStorage.setItem('jwt', response.data.JWT);
+                localStorage.setItem('UserName', response.data.name);
                 // redirect to previous page
                 window.history.back();
                 notify_success('Login successful');
