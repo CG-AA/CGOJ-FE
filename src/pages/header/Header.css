@@ -45,6 +45,11 @@
   border: 1px solid transparent;
   border-radius: 4px;
   transition: background-color 0.3s, border-color 0.3s;
+  cursor: pointer;
+}
+
+.nav-button:hover {
+  text-shadow: 0 0 5px var(--icon);
 }
 
 .nav-link:hover {
