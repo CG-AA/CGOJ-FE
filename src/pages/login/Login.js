@@ -29,7 +29,7 @@ function Login() {
                 // store the token in local storage
                 localStorage.setItem('jwt', response.data.JWT);
                 localStorage.setItem('userName', response.data.name);
-                window.location.reload();
+                // window.location.reload();
                 notify_success('Login successful');
             } else {
                 notify_error('Incorrect email or password');

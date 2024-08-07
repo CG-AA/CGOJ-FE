@@ -12,6 +12,7 @@ function Header() {
                     <Link to="/profile" className="nav-link">
                         Welcome, {storedUserName}
                     </Link>
+                    <button className='nav-button' onClick={() => {localStorage.clear(); window.location.reload();}}>Logout</button>
                 </li>
             );
         } else {
