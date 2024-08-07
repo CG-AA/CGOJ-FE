@@ -2,6 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
+// Override localStorage.setItem to dispatch a custom event
+const originalSetItem = localStorage.setItem;
+
+localStorage.setItem = function(key, value) {
+    const event = new Event('itemInserted');
+    document.dispatchEvent(event);
+    originalSetItem.apply(this, arguments);
+};
+
 function Header() {
     const [authButton, setAuthButton] = useState('');
 
@@ -32,11 +41,12 @@ function Header() {
 
         updateUserName();
 
-        window.addEventListener('storage', updateUserName);
+        // Listen for custom 'itemInserted' event
+        document.addEventListener('itemInserted', updateUserName);
 
         // Cleanup event listener on component unmount
         return () => {
-            window.removeEventListener('storage', updateUserName);
+            document.removeEventListener('itemInserted', updateUserName);
         };
     }, []);
 
