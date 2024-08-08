@@ -39,6 +39,11 @@ function Header() {
                             Home
                         </Link>
                     </li>
+                    <li className="nav-item">
+                        <Link to="/problems" className="nav-link">
+                            Problems
+                        </Link>
+                    </li>
                     {authButton}
                 </ul>
             </nav>
