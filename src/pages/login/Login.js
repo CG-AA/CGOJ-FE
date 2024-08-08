@@ -7,15 +7,17 @@ import React, { useState, useContext } from 'react';
 import { notify_error, notify_warning, notify_success } from '../../notification/Notification';
 import validator from 'validator';
 import { callAPI } from '../../API/API';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../../provider/golbalProvider';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { userName, setUserName } = useContext(GlobalContext);
+    const { setUserName } = useContext(GlobalContext);
+    const navigate = useNavigate();
     if(localStorage.getItem('userName')) {
-        return <Navigate to="/" />
+        navigate('/');
+        return;
     }
 
     const handleSubmit = async (event) => {
@@ -30,8 +32,8 @@ function Login() {
             if (response.status === 200) {
                 // store the token in local storage
                 localStorage.setItem('jwt', response.data.JWT);
-                setUserName(response.data.userName);
-                // window.location.reload();
+                setUserName(response.data.name);
+                navigate(-1);
                 notify_success('Login successful');
             } else {
                 notify_error('Incorrect email or password');

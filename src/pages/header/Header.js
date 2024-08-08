@@ -4,11 +4,10 @@ import './Header.css';
 import { GlobalContext } from '../../provider/golbalProvider';
 function Header() {
     const [authButton, setAuthButton] = useState('');
-    const { userName, setUserName } = useContext(GlobalContext);
+    const { userName } = useContext(GlobalContext);
 
     useEffect(() => {
         if(userName) {
-            console.log('name');
             setAuthButton(
                 <li className="nav-item" style={{ marginLeft: 'auto' }}>
                     <Link to="/profile" className="nav-link">
@@ -18,7 +17,6 @@ function Header() {
                 </li>
             );
         } else {
-            console.log('no name');
             setAuthButton(
                 <li className="nav-item" style={{ marginLeft: 'auto' }}>
                     <Link to="/login" className="nav-link">
