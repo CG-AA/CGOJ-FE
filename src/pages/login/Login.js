@@ -3,15 +3,17 @@
  * POST /login { email: string, password: string }
  */
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { notify_error, notify_warning, notify_success } from '../../notification/Notification';
 import validator from 'validator';
 import { callAPI } from '../../API/API';
 import { Navigate } from 'react-router-dom';
+import { GlobalContext } from '../../provider/golbalProvider';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { userName, setUserName } = useContext(GlobalContext);
     if(localStorage.getItem('userName')) {
         return <Navigate to="/" />
     }
@@ -28,7 +30,7 @@ function Login() {
             if (response.status === 200) {
                 // store the token in local storage
                 localStorage.setItem('jwt', response.data.JWT);
-                localStorage.setItem('userName', response.data.name);
+                setUserName(response.data.userName);
                 // window.location.reload();
                 notify_success('Login successful');
             } else {
