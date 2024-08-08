@@ -1,11 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { callAPI } from '../../API/API';
+import { notify_error } from '../../notification/Notification';
 
 function Problems() {
     const [problems, setProblems] = useState([]);
     const [page, setPage] = useState(1);
     const [problemsPerPage, setProblemsPerPage] = useState(10);
     const [problemsCount, setProblemsCount] = useState(0);
+
+    const fetchProblems = async () => {
+        try {
+            const response = await callAPI('GET', `/problems?page=${page}&problemsPerPage=${problemsPerPage}`);
+            setProblems(response.data.problems);
+            setProblemsCount(response.data.problemsCount);
+        } catch (error) {
+            notify_error(error.message);
+        }
+    }
+
+    useEffect(() => {
+        fetchProblems();
+    }, [page, problemsPerPage]);
+
     return (
     <div className="problems">
         <table>
