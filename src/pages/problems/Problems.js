@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { callAPI } from '../../API/API';
 import { notify_error } from '../../notification/Notification';
 
@@ -8,7 +8,7 @@ function Problems() {
     const [problemsPerPage, setProblemsPerPage] = useState(10);
     const [problemsCount, setProblemsCount] = useState(0);
 
-    const fetchProblems = async () => {
+    const fetchProblems = useCallback(async () => {
         try {
             const response = await callAPI('GET', `/problems?page=${page}&problemsPerPage=${problemsPerPage}`);
             setProblems(response.data.problems);
@@ -16,11 +16,11 @@ function Problems() {
         } catch (error) {
             notify_error(error.message);
         }
-    }
+    }, [page, problemsPerPage]);
 
     useEffect(() => {
         fetchProblems();
-    }, [page, problemsPerPage]);
+    }, [fetchProblems]);
 
     return (
     <div className="problems">
