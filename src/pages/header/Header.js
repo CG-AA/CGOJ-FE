@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 import { GlobalContext } from '../../provider/golbalProvider';
+import MP_LIST from '../management/MP_List';
 function Header() {
     const [authButton, setAuthButton] = useState('');
     const { userName } = useContext(GlobalContext);
@@ -43,6 +44,9 @@ function Header() {
                         <Link to="/problems" className="nav-link">
                             Problems
                         </Link>
+                    </li>
+                    <li className="nav-item">
+                        <MP_LIST/>
                     </li>
                     {authButton}
                 </ul>

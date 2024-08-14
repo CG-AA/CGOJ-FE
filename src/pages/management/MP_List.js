@@ -5,9 +5,9 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-  } from "@/components/ui/dropdown-menu"
+  } from "@radix-ui/react-dropdown-menu"
 
-export default function List() {
+export default function MP_LIST() {
     return (
         <DropdownMenu>
         <DropdownMenuTrigger>Management</DropdownMenuTrigger>
