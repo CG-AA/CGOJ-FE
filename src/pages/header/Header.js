@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 import { GlobalContext } from '../../provider/golbalProvider';
-import MP_LIST from '../management/MP_List';
+import MP_LIST from '../management/MP_overview';
 function Header() {
     const [authButton, setAuthButton] = useState('');
     const { userName } = useContext(GlobalContext);

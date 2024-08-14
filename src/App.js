@@ -9,6 +9,7 @@ import Home from './pages/home/Home';
 import Register from './pages/register/Register';
 import Login from './pages/login/Login';
 import Problems from './pages/problems/Problems';
+import { MP_ROUTES } from './pages/management/MP_overview';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/problems" element={<Problems />} />
+          {MP_ROUTES()}
         </Routes>
         <Notification />
       </Router>
