@@ -1,5 +1,41 @@
 import React, { useState } from 'react';
 import {notify_error, notify_success} from '../../notification/Notification';
+import { callAPI } from '../../API/API';
+
+const onUpload = async (json) => {
+    try {
+        const response = await callAPI('POST', '/manage_panel/problems', json);
+        if (response.status === 200) {
+            notify_success('Problem uploaded successfully');
+        } else {
+            notify_error(response.data.message || 'Error uploading problem');
+        }
+    } catch (error) {
+        notify_error(error.message);
+    }
+};
+
+function UploadProblem({ onUpload }) {
+    const handleFileUpload = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            try {
+                const json = JSON.parse(event.target.result);
+                onUpload(json);
+            } catch (error) {
+                notify_error('Invalid JSON file');
+            }
+        };
+        reader.readAsText(file);
+    };
+
+    return (
+        <div>
+            <input type="file" accept=".json" onChange={handleFileUpload} />
+        </div>
+    );
+}
 
 export default function AddProblem() {
     const [title, setTitle] = useState('');
