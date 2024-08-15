@@ -32,6 +32,7 @@ function UploadProblem({ onUpload }) {
 
     return (
         <div>
+            <label>or Upload Problem:</label>
             <input type="file" accept=".json" onChange={handleFileUpload} />
         </div>
     );
@@ -86,6 +87,7 @@ export default function AddProblem() {
     };
 
     return (
+        <>
         <form onSubmit={handleSubmit}>
             <div>
                 <label>Title:</label>
@@ -197,5 +199,7 @@ export default function AddProblem() {
             </div>
             <button type="submit">Submit</button>
         </form>
+        <UploadProblem onUpload={onUpload} />
+        </>
     );
 }
