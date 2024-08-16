@@ -3,15 +3,16 @@ import { notify_error } from '../notification/Notification';
 
 const url = process.env.REACT_APP_BE_URL;
 
-// todo
-// remove data and content-type if the method does not require them
 async function callAPI(method, endpoint, data) {
     const fullUrl = `${url}${endpoint}`;
-    let jwt;
-    if(localStorage.getItem('jwt') === null) {
-        jwt = '0';
-    } else {
-        jwt = localStorage.getItem('jwt');
+    const jwt = localStorage.getItem('jwt') || '0';
+
+    const headers = {
+        'Authorization': `${jwt}`
+    };
+
+    if (data && (method === 'POST' || method === 'PUT' || method === 'PATCH')) {
+        headers['Content-Type'] = 'application/json';
     }
 
     try {
@@ -19,10 +20,7 @@ async function callAPI(method, endpoint, data) {
             method: method,
             url: fullUrl,
             data: data,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `${jwt}`
-            }
+            headers: headers
         });
         return response;
     } catch (error) {
