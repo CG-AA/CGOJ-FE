@@ -3,7 +3,7 @@
  * POST /register { name: string, email: string, password: string }
  */
 import React, { useState, useContext } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { notify_error, notify_warning, notify_success } from '../../notification/Notification';
 import validator from 'validator';
 import { callAPI } from '../../API/API';
@@ -14,6 +14,7 @@ function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { setUserName } = useContext(GlobalContext);
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -29,7 +30,7 @@ function Register() {
                 localStorage.setItem('jwt', response.data.JWT);
                 setUserName(response.data.name);
                 // redirect to home page
-                Navigate('/');
+                navigate('/');
                 notify_success('Registration successful');
             }
         }
