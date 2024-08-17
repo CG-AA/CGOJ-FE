@@ -1,46 +1,53 @@
+import { useCallback } from 'react';
 import axios from 'axios';
 import { notify_error } from '../notification/Notification';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const url = process.env.REACT_APP_BE_URL;
 
-async function callAPI(method, endpoint, data) {
-    const fullUrl = `${url}${endpoint}`;
-    const jwt = localStorage.getItem('jwt') || '0';
+function useAPI() {
+    const navigate = useNavigate();
 
-    const headers = {
-        'Authorization': `${jwt}`
-    };
+    const callAPI = useCallback(async (method, endpoint, data) => {
+        const fullUrl = `${url}${endpoint}`;
+        const jwt = localStorage.getItem('jwt') || '0';
 
-    if (data && (method === 'POST' || method === 'PUT' || method === 'PATCH')) {
-        headers['Content-Type'] = 'application/json';
-    }
+        const headers = {
+            'Authorization': `${jwt}`
+        };
 
-    try {
-        const response = await axios({
-            method: method,
-            url: fullUrl,
-            data: data,
-            headers: headers
-        });
-        return response;
-    } catch (error) {
-        if (error.response?.status === 401) {
-            if (localStorage.getItem('jwt')) {
-                localStorage.removeItem('jwt');
-                notify_error('Session expired. Please login again');
+        if (data && (method === 'POST' || method === 'PUT' || method === 'PATCH')) {
+            headers['Content-Type'] = 'application/json';
+        }
+
+        try {
+            const response = await axios({
+                method: method,
+                url: fullUrl,
+                data: data,
+                headers: headers
+            });
+            return response;
+        } catch (error) {
+            if (error.response?.status === 401) {
+                if (localStorage.getItem('jwt')) {
+                    localStorage.removeItem('jwt');
+                    notify_error('Session expired. Please login again');
+                }
+                navigate('/login');
+                notify_error('Please login to continue');
+                return { error: 'Unauthorized' };
             }
-            Navigate('/login');
-            notify_error('Please login to continue');
-            return { error: 'Unauthorized' };
+            if (error.response?.data?.error) {
+                notify_error(error.response.data.error);
+                return { error: error.response.data.error };
+            }
+            notify_error('An unexpected error occurred');
+            return { error: 'Unexpected error' };
         }
-        if (error.response?.data?.error) {
-            notify_error(error.response.data.error);
-            return { error: error.response.data.error };
-        }
-        notify_error('An unexpected error occurred');
-        return { error: 'Unexpected error' };
-    }
+    }, [navigate]);
+
+    return callAPI;
 }
 
-export { callAPI };
+export { useAPI };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { callAPI } from '../../API/API';
+import { useAPI } from '../../API/API';
 import { notify_error } from '../../notification/Notification';
 //to do
 function Contests() {
@@ -10,7 +10,7 @@ function Contests() {
 
     const fetchContests = useCallback(async () => {
         try {
-            const response = await callAPI('GET', `/contests?page=${page}&problemsPerPage=${contestsPerPage}`);
+            const response = await useAPI('GET', `/contests?page=${page}&problemsPerPage=${contestsPerPage}`);
             if(response.status !== 200) {
                 return;
             }

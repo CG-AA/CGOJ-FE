@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import {notify_error, notify_success} from '../../notification/Notification';
-import { callAPI } from '../../API/API';
+import { useAPI } from '../../API/API';
 
 const onUpload = async (json) => {
     try {
-        const response = await callAPI('POST', '/manage_panel/problems', json);
+        const response = await useAPI('POST', '/manage_panel/problems', json);
         if (response.status === 200) {
             notify_success('Problem uploaded successfully');
         } else {

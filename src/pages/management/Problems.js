@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { callAPI } from '../../API/API';
+import { useAPI } from '../../API/API';
 import { notify_error } from '../../notification/Notification';
 
 function Problems() {
@@ -10,7 +10,7 @@ function Problems() {
 
     const fetchProblems = useCallback(async () => {
         try {
-            const response = await callAPI('GET', `/manage_panel/problems?page=${page}&problemsPerPage=${problemsPerPage}`);
+            const response = await useAPI('GET', `/manage_panel/problems?page=${page}&problemsPerPage=${problemsPerPage}`);
             if(response.status !== 200) {
             }
             setProblems(response.data.problems);

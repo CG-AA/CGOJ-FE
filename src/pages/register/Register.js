@@ -6,7 +6,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { notify_error, notify_warning, notify_success } from '../../notification/Notification';
 import validator from 'validator';
-import { callAPI } from '../../API/API';
+import { useAPI } from '../../API/API';
 import { GlobalContext } from '../../provider/golbalProvider';
 
 function Register() {
@@ -24,7 +24,7 @@ function Register() {
             return;
         }
         try {
-            const response = await callAPI('POST', '/register', { 'name': name, 'email': email, 'password': password });
+            const response = await useAPI('POST', '/register', { 'name': name, 'email': email, 'password': password });
             if (response.status === 200) {
                 // store the token in local storage
                 localStorage.setItem('jwt', response.data.JWT);

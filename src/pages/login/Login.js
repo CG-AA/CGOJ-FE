@@ -6,7 +6,7 @@
 import React, { useState, useContext } from 'react';
 import { notify_error, notify_warning, notify_success } from '../../notification/Notification';
 import validator from 'validator';
-import { callAPI } from '../../API/API';
+import { useAPI } from '../../API/API';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../../provider/golbalProvider';
 
@@ -28,7 +28,7 @@ function Login() {
             return;
         }
         try {
-            const response = await callAPI('POST', '/login', { 'email': email, 'password': password });
+            const response = await useAPI('POST', '/login', { 'email': email, 'password': password });
             if (response.status === 200) {
                 // store the token in local storage
                 localStorage.setItem('jwt', response.data.JWT);
