@@ -12,7 +12,6 @@ function Contests() {
         try {
             const response = await callAPI('GET', `/contests?page=${page}&problemsPerPage=${contestsPerPage}`);
             if(response.status !== 200) {
-                notify_error(response.data || 'Failed to fetch contests');
                 return;
             }
             setContests(response.data.contests);

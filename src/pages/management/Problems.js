@@ -12,8 +12,6 @@ function Problems() {
         try {
             const response = await callAPI('GET', `/manage_panel/problems?page=${page}&problemsPerPage=${problemsPerPage}`);
             if(response.status !== 200) {
-                notify_error(response.data || 'Failed to fetch problems');
-                return;
             }
             setProblems(response.data.problems);
             setProblemsCount(response.data.problemsCount);

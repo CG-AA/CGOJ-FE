@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { notify_error } from '../notification/Notification';
+import { Navigate } from 'react-router-dom';
 
 const url = process.env.REACT_APP_BE_URL;
 
@@ -24,8 +25,21 @@ async function callAPI(method, endpoint, data) {
         });
         return response;
     } catch (error) {
-        notify_error(error.response?.data?.message || 'An error occurred');
-        throw error;
+        if (error.response?.status === 401) {
+            if (localStorage.getItem('jwt')) {
+                localStorage.removeItem('jwt');
+                notify_error('Session expired. Please login again');
+            }
+            Navigate('/login');
+            notify_error('Please login to continue');
+            return { error: 'Unauthorized' };
+        }
+        if (error.response?.data?.error) {
+            notify_error(error.response.data.error);
+            return { error: error.response.data.error };
+        }
+        notify_error('An unexpected error occurred');
+        return { error: 'Unexpected error' };
     }
 }
 

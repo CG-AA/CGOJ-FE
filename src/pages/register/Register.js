@@ -31,8 +31,6 @@ function Register() {
                 // redirect to home page
                 Navigate('/');
                 notify_success('Registration successful');
-            } else {
-                notify_error(response.data.message);
             }
         }
         catch (error) {

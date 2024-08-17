@@ -36,7 +36,6 @@ function Login() {
                 navigate(-1);
                 notify_success('Login successful');
             } else {
-                notify_error('Incorrect email or password');
             }
         } catch (error) {
             notify_error(error.message);
