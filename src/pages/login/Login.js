@@ -15,20 +15,22 @@ function Login() {
     const [password, setPassword] = useState('');
     const { setUserName } = useContext(GlobalContext);
     const navigate = useNavigate();
+    const API = useAPI();
     if(localStorage.getItem('userName')) {
         navigate('/');
         return;
     }
 
-    const handleSubmit = async (event) => {
+    const HandleSubmit = async (event) => {
         event.preventDefault();
         // validate the form
         if (!validator.isEmail(email)) {
             notify_warning('Please enter a valid email address');
             return;
         }
+        
         try {
-            const response = await useAPI('POST', '/login', { 'email': email, 'password': password });
+            const response = await API('POST', '/login', { 'email': email, 'password': password });
             if (response.status === 200) {
                 // store the token in local storage
                 localStorage.setItem('jwt', response.data.JWT);
@@ -36,6 +38,7 @@ function Login() {
                 navigate(-1);
                 notify_success('Login successful');
             } else {
+                notify_error('Login failed');
             }
         } catch (error) {
             notify_error(error.message);
@@ -45,7 +48,7 @@ function Login() {
     return (
         <div className="login-container">
             <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={HandleSubmit}>
                 <div className="form-group">
                     <label htmlFor="email">Email</label>
                     <input
