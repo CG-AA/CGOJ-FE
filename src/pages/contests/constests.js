@@ -7,10 +7,11 @@ function Contests() {
     const [page, setPage] = useState(1);
     const [contestsPerPage, setContestsPerPage] = useState(10);
     const [contestsCount, setContestsCount] = useState(0);
+    const API = useAPI();
 
     const fetchContests = useCallback(async () => {
         try {
-            const response = await useAPI('GET', `/contests?page=${page}&problemsPerPage=${contestsPerPage}`);
+            const response = await API('GET', `/contests?page=${page}&problemsPerPage=${contestsPerPage}`);
             if(response.status !== 200) {
                 return;
             }

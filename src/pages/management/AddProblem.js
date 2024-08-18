@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import {notify_error, notify_success} from '../../notification/Notification';
 import { useAPI } from '../../API/API';
 
-const onUpload = async (json) => {
+const OnUpload = async (json) => {
+    const API = useAPI();
     try {
-        const response = await useAPI('POST', '/manage_panel/problems', json);
+        const response = await API('POST', '/manage_panel/problems', json);
         if (response.status === 200) {
             notify_success('Problem uploaded successfully');
         } else {
@@ -201,7 +202,7 @@ export default function AddProblem() {
             </div>
             <button type="submit">Submit</button>
         </form>
-        <UploadProblem onUpload={onUpload} />
+        <UploadProblem onUpload={OnUpload} />
         </>
     );
 }
