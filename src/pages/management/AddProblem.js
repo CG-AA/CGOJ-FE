@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import {notify_error, notify_success} from '../../notification/Notification';
 import { useAPI } from '../../API/API';
 
-const OnUpload = async (json) => {
-    const API = useAPI();
+const OnUpload = async (json, API) => {
     try {
         const response = await API('POST', '/manage_panel/problems', json);
         if (response.status === 200) {
@@ -19,13 +18,14 @@ const OnUpload = async (json) => {
 };
 
 function UploadProblem({ OnUpload }) {
+    const API = useAPI();
     const handleFileUpload = (e) => {
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.onload = (event) => {
             try {
                 const json = JSON.parse(event.target.result);
-                OnUpload(json);
+                OnUpload(json, API);
             } catch (error) {
                 notify_error('Invalid JSON file');
             }
