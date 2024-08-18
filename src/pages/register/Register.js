@@ -15,6 +15,7 @@ function Register() {
     const [password, setPassword] = useState('');
     const { setUserName } = useContext(GlobalContext);
     const navigate = useNavigate();
+    const API = useAPI();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -24,7 +25,7 @@ function Register() {
             return;
         }
         try {
-            const response = await useAPI('POST', '/register', { 'name': name, 'email': email, 'password': password });
+            const response = await API('POST', '/register', { 'name': name, 'email': email, 'password': password });
             if (response.status === 200) {
                 // store the token in local storage
                 localStorage.setItem('jwt', response.data.JWT);

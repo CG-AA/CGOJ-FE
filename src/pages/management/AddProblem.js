@@ -18,14 +18,14 @@ const OnUpload = async (json) => {
     }
 };
 
-function UploadProblem({ onUpload }) {
+function UploadProblem({ OnUpload }) {
     const handleFileUpload = (e) => {
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.onload = (event) => {
             try {
                 const json = JSON.parse(event.target.result);
-                onUpload(json);
+                OnUpload(json);
             } catch (error) {
                 notify_error('Invalid JSON file');
             }
@@ -202,7 +202,7 @@ export default function AddProblem() {
             </div>
             <button type="submit">Submit</button>
         </form>
-        <UploadProblem onUpload={OnUpload} />
+        <UploadProblem OnUpload={OnUpload} />
         </>
     );
 }

@@ -7,10 +7,11 @@ function Problems() {
     const [page, setPage] = useState(1);
     const [problemsPerPage, setProblemsPerPage] = useState(10);
     const [problemsCount, setProblemsCount] = useState(0);
+    const API = useAPI();
 
     const fetchProblems = useCallback(async () => {
         try {
-            const response = await useAPI('GET', `/manage_panel/problems?page=${page}&problemsPerPage=${problemsPerPage}`);
+            const response = await API('GET', `/manage_panel/problems?page=${page}&problemsPerPage=${problemsPerPage}`);
             if(response.status !== 200) {
             }
             setProblems(response.data.problems);
@@ -18,7 +19,7 @@ function Problems() {
         } catch (error) {
             notify_error(error.message);
         }
-    }, [page, problemsPerPage]);
+    }, [API, page, problemsPerPage]);
 
     useEffect(() => {
         fetchProblems();
