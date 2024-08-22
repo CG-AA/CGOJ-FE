@@ -16,9 +16,9 @@ function Login() {
     const { setUserName } = useContext(GlobalContext);
     const navigate = useNavigate();
     const API = useAPI();
-    if(localStorage.getItem('userName')) {
+    if(localStorage.getItem('userName') !== '""') {
         navigate('/');
-        return;
+        return null;
     }
 
     const HandleSubmit = async (event) => {

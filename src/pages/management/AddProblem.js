@@ -8,8 +8,8 @@ const OnUpload = async (json, API) => {
         if (response.status === 200) {
             notify_success('Problem uploaded successfully');
         } else {
-            if (response.data.message) {
-                notify_error(response.data.message);
+            if (response.error) {
+                notify_error(response.error);
             }
         }
     } catch (error) {

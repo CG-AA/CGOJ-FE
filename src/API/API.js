@@ -32,6 +32,7 @@ function useAPI() {
             if (error.response?.status === 401) {
                 if (localStorage.getItem('jwt')) {
                     localStorage.removeItem('jwt');
+                    localStorage.removeItem('userName');
                     notify_error('Session expired. Please login again');
                 }
                 navigate('/login');
