@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { useAPI } from '../../API/API';
 import { notify_error } from '../../notification/Notification';
 
@@ -13,11 +14,13 @@ function Problems() {
         try {
             const response = await API('GET', `/manage_panel/problems?page=${page}&problemsPerPage=${problemsPerPage}`);
             if(response.status !== 200) {
+                notify_error(response.data.error || 'An unexpected error occurred');
+                return;
             }
             setProblems(response.data.problems);
             setProblemsCount(response.data.problemsCount);
         } catch (error) {
-            notify_error(error.message);
+            notify_error('An unexpected error occurred' || error);
         }
     }, [API, page, problemsPerPage]);
 
@@ -38,8 +41,8 @@ function Problems() {
             <tbody>
                 {problems.map((problem, index) => (
                     <tr key={index}>
-                        <td>{problem.id}</td>
-                        <td>{problem.title}</td>
+                        <Link to={`/manage_panel/problems/${problem.id}`}>{problem.id}</Link>
+                        <Link to={`/manage_panel/problems/${problem.id}`}>{problem.title}</Link>
                         <td>{problem.difficulty}</td>
                     </tr>
                 ))}

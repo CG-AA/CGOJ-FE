@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { useAPI } from '../../API/API';
-import { notify_error } from '../../notification/Notification';
 
 function Problems() {
     const [problems, setProblems] = useState([]);
@@ -18,7 +18,6 @@ function Problems() {
             setProblems(response.data.problems);
             setProblemsCount(response.data.problemsCount);
         } catch (error) {
-            notify_error(error.message);
         }
     }, [API, page, problemsPerPage]);
 
@@ -39,8 +38,8 @@ function Problems() {
             <tbody>
                 {problems.map((problem, index) => (
                     <tr key={index}>
-                        <td>{problem.id}</td>
-                        <td>{problem.title}</td>
+                        <Link to={`/problems/${problem.id}`}>{problem.id}</Link>
+                        <Link to={`/problems/${problem.id}`}>{problem.title}</Link>
                         <td>{problem.difficulty}</td>
                     </tr>
                 ))}

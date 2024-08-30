@@ -18,7 +18,6 @@ function Contests() {
             setContests(response.data.contests);
             setContestsCount(response.data.contestsCount);
         } catch (error) {
-            notify_error(error.message);
         }
     }, [page, contestsPerPage]);
 

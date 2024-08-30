@@ -4,7 +4,7 @@
  */
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { notify_error, notify_warning, notify_success } from '../../notification/Notification';
+import { notify_warning, notify_success } from '../../notification/Notification';
 import validator from 'validator';
 import { useAPI } from '../../API/API';
 import { GlobalContext } from '../../provider/golbalProvider';
@@ -36,7 +36,6 @@ function Register() {
             }
         }
         catch (error) {
-            notify_error(error.message);
         }
     }
 
